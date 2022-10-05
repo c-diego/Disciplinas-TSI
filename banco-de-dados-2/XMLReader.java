@@ -11,12 +11,13 @@ import org.xml.sax.helpers.DefaultHandler;
 public class XMLReader extends DefaultHandler {
 
     private int titleCounter;
-    private Set<String> authors;
+    private Set<String> authors, journals;
     private StringBuilder stringBuilder;
 
     @Override
     public void startDocument() throws SAXException {
         authors = new HashSet<>();
+        journals = new HashSet<>();
         titleCounter = 0;
         stringBuilder = new StringBuilder();
     }
@@ -34,17 +35,26 @@ public class XMLReader extends DefaultHandler {
     @Override
     public void endElement(String uri, String localName, String qName) throws SAXException {
         
-        if (qName.equals("title"))
-            titleCounter++;
-        
-        if (qName.equals("author"))
-            authors.add(stringBuilder.toString());
+        switch (qName) {
+            case "author":
+                authors.add(stringBuilder.toString());
+                break;
+            case "title":
+                titleCounter++;
+                break;
+            case "journal":
+                journals.add(stringBuilder.toString());
+                break;
+            default:
+                break;
+        }
     }
 
     @Override
     public void endDocument() throws SAXException {
         System.out.println("Número de pesquisas: " + titleCounter);
-        System.out.println(Arrays.toString(authors.toArray()));
+        System.out.println("Autores:" + Arrays.toString(authors.toArray()));
+        System.out.println("Veículos de Publicação:" + Arrays.toString(journals.toArray()));
     }
     
     public static void main(String[] args) throws ParserConfigurationException, SAXException, IOException {
