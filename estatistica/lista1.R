@@ -1,4 +1,68 @@
-nums <- c(10, 94, 32, 19, 55, 35, 20, 48, 68, 24, 18, 83, 30, 62, 85, 50, 20, 90, 60, 14, 92, 20, 15, 58, 75, 16, 48, 81, 79, 46)
+# Diego Corte Costa
+# RA: a2314428
+
+## Questão 1
+
+## Média:
+nums <- c(10, 19, 20, 24, 30, 50, 60, 20, 75, 81, 94, 55, 48, 18, 62, 20, 14, 15, 16, 79, 32, 35, 68, 83, 85, 90, 92, 58, 48, 46)
+nums_size <- length(nums)
+nums_sum <- sum(nums)
+media <- nums_sum/nums_size
+media
+
+## Mediana
+mediana <- median(nums)
+mediana
+
+## Moda
+matrix <- as.matrix(table(nums))
+moda <- subset(matrix, matrix[, 1] == max(matrix[, 1]))
+moda
+
+# Questão 2
+
+## Variância
+variancia <- var(nums)
+variancia
+
+## Desvio Padrão
+desvio_padrao <- sd(nums)
+desvio_padrao
+
+## Coeficiente de variação
+coeficiente_variacao <- desvio_padrao/media*100
+coeficiente_variacao
+
+# Questão 3
+
+## Quartis
+quartis <- quantile(nums)
+quartis
+
+## Amplitude interquartílica
+amplitude <- quartis[4] - quartis[2]
+amplitude
+
+## Limite Inferior
+limite_inferior <- as.numeric(quartis[2] - 1.5 * (quartis[4] - quartis[2]))
+limite_inferior
+
+## Limite Superior
+limite_superior <- as.numeric(quartis[4] + 1.5 * (quartis[4] - quartis[2]))
+limite_superior
+
+# Questão 4
+par(mar = c(3,2,1,1))
+boxplot(nums)
+## Os valores do conjunto estão dentro dos limites inferior e superior. Além disso,
+## nota-se uma maior variância no último quartil e uma menor variância no primeiro quartil.
+
+# Questão 5
+#install.packages("moments")
+library(moments)
+assimetria <- skewness(nums)
+assimetria
+## assimetria > 0; A distribuição é assimétrica positiva (à direita)
 
 # Questão 6
 
@@ -282,4 +346,3 @@ suppressWarnings(suppressMessages(library("arm")))
 discrete.histogram(nums, freq = TRUE, xlab = "", bar.width = 0.8)
 lines(freq, type = "b", lwd = 3)
 # Podemos constar que nosso conjunto de data é bimodal assimétrico.
-
